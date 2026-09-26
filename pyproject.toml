@@ -1,0 +1,37 @@
+[project]
+name = "soc-graph-guard"
+version = "0.1.0"
+description = "A security-first agentic SOC reference on LangGraph: graded autonomy, human gates, injection screening, evidence-bound reports and outcome-based evals."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Lijith V M" }]
+requires-python = ">=3.10"
+dependencies = [
+    "langgraph>=0.4",
+    "pydantic>=2.5",
+    "guardlayer @ git+https://github.com/Lijithvmv/Guard-Layer.git",
+]
+keywords = ["ai-security", "langgraph", "soc", "agents", "prompt-injection", "security-operations"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+soc-graph-guard = "soc_graph_guard.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+soc_graph_guard = ["scenarios/*.json"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

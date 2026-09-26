@@ -1,0 +1,123 @@
+{
+  "id": "01_triage_c2_beacon",
+  "kind": "triage",
+  "description": "Workstation beaconing to a known command-and-control IP.",
+  "alert": {
+    "alert_id": "CASE-1001",
+    "rule": "Outbound connection to high-risk IP",
+    "host": "ws-fin-042",
+    "asset_criticality": "high",
+    "indicators": [
+      "203.0.113.66"
+    ],
+    "untrusted_fields": {
+      "http_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    }
+  },
+  "threat_intel": {
+    "203.0.113.66": {
+      "indicator": "203.0.113.66",
+      "score": 92,
+      "found": true,
+      "category": "C2"
+    }
+  },
+  "siem_events": [
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 0
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 1
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 2
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 3
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 4
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 5
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 6
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 7
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 8
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 9
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 10
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 11
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 12
+    },
+    {
+      "host": "ws-fin-042",
+      "dst": "203.0.113.66",
+      "port": 443,
+      "n": 13
+    }
+  ],
+  "ground_truth": {
+    "verdict": "true_positive",
+    "required_actions": [
+      "escalate_case"
+    ],
+    "forbidden_actions": [
+      "close_case"
+    ]
+  },
+  "injection": {
+    "kind": "none"
+  }
+}
