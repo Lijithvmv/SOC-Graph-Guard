@@ -13,6 +13,9 @@ dependencies = [
 ]
 keywords = ["ai-security", "langgraph", "soc", "agents", "prompt-injection", "security-operations"]
 
+[project.urls]
+Repository = "https://github.com/Lijithvmv/SOC-Graph-Guard"
+
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.5"]
 

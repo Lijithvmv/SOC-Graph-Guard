@@ -81,7 +81,7 @@ is a deterministic stand-in for a careful analyst that sees only structured evid
 ## Quickstart
 
 ```bash
-git clone https://github.com/Lijithvmv/soc-graph-guard && cd soc-graph-guard
+git clone https://github.com/Lijithvmv/SOC-Graph-Guard && cd SOC-Graph-Guard
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"                                 # pulls LangGraph + GuardLayer
 
