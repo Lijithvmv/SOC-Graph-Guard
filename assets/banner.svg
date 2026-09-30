@@ -49,7 +49,7 @@
 
   <!-- wordmark -->
   <g transform="translate(96,142)">
-    <rect x="0" y="-34" width="214" height="30" rx="6" fill="#230a10" stroke="#5c1c2b"/>
+    <rect x="0" y="-34" width="248" height="30" rx="6" fill="#230a10" stroke="#5c1c2b"/>
     <text x="16" y="-13" font-size="15" letter-spacing="2" font-weight="600" fill="#fb7185">AGENTIC SOC · LANGGRAPH</text>
 
     <text x="0" y="76" font-size="72" font-weight="800" fill="#fff1f3" letter-spacing="-1">SOC-Graph-Guard</text>
@@ -84,6 +84,6 @@
 
   <g transform="translate(96,600)" font-size="17" fill="#a3566a">
     <text x="0" y="0">github.com/Lijithvmv/SOC-Graph-Guard</text>
-    <text x="1184" y="0" text-anchor="end" fill="#8c4658" font-weight="600">Guarded graph 7/7  vs  naive agent 2/7</text>
+    <text x="1088" y="0" text-anchor="end" fill="#8c4658" font-weight="600">Guarded graph 7/7  vs  naive agent 2/7</text>
   </g>
 </svg>
