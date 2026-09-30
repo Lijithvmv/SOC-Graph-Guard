@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.svg" alt="SOC-Graph-Guard — a security-first agentic SOC on LangGraph" width="100%">
+</p>
+
 # soc-graph-guard
 
 **A security-first agentic SOC reference on LangGraph.** It shows what it takes to build a security-operations

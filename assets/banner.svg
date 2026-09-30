@@ -1,0 +1,89 @@
+<svg viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#120608"/>
+      <stop offset="0.55" stop-color="#1a0a0e"/>
+      <stop offset="1" stop-color="#100608"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fb7185"/>
+      <stop offset="1" stop-color="#e11d48"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e11d48" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#e11d48" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#3a1520"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1280" height="640" fill="url(#dots)" opacity="0.5"/>
+  <circle cx="1020" cy="320" r="360" fill="url(#glow)"/>
+  <rect x="0" y="0" width="8" height="640" fill="url(#acc)"/>
+
+  <!-- right motif: a guarded graph -->
+  <g transform="translate(1020,320)">
+    <g stroke="#6b2233" stroke-width="2">
+      <line x1="-120" y1="-110" x2="-10" y2="-40"/>
+      <line x1="-10" y1="-40" x2="120" y2="-90"/>
+      <line x1="-10" y1="-40" x2="-70" y2="80"/>
+      <line x1="-10" y1="-40" x2="90" y2="70"/>
+      <line x1="90" y1="70" x2="120" y2="-90"/>
+      <line x1="-70" y1="80" x2="90" y2="70"/>
+    </g>
+    <g fill="#1a0c10" stroke="url(#acc)" stroke-width="3">
+      <circle cx="-120" cy="-110" r="14"/>
+      <circle cx="120" cy="-90" r="14"/>
+      <circle cx="-70" cy="80" r="14"/>
+      <circle cx="90" cy="70" r="14"/>
+      <circle cx="-10" cy="-40" r="18" stroke-width="4"/>
+    </g>
+    <!-- shield guarding the central node -->
+    <g transform="translate(40,10)">
+      <path d="M0,-58 L52,-38 L52,14 Q52,52 0,76 Q-52,52 -52,14 L-52,-38 Z" fill="#20090f" stroke="url(#acc)" stroke-width="3"/>
+      <path d="M-22,4 L-6,22 L26,-18" fill="none" stroke="#fb7185" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- wordmark -->
+  <g transform="translate(96,142)">
+    <rect x="0" y="-34" width="214" height="30" rx="6" fill="#230a10" stroke="#5c1c2b"/>
+    <text x="16" y="-13" font-size="15" letter-spacing="2" font-weight="600" fill="#fb7185">AGENTIC SOC · LANGGRAPH</text>
+
+    <text x="0" y="76" font-size="72" font-weight="800" fill="#fff1f3" letter-spacing="-1">SOC-Graph-Guard</text>
+    <text x="2" y="126" font-size="28" font-weight="600" fill="#fecdd3">A security-first agentic SOC you could point at production.</text>
+
+    <text x="2" y="174" font-size="21" fill="#e79aa8">Graded autonomy · human approval before anything irreversible ·</text>
+    <text x="2" y="204" font-size="21" fill="#e79aa8">verdicts computed from evidence, not text.</text>
+
+    <g font-size="16" font-weight="600" fill="#fcd9de">
+      <g transform="translate(0,252)">
+        <rect x="0" y="0" width="196" height="38" rx="19" fill="#230a10" stroke="#5c1c2b"/>
+        <text x="20" y="25">Evidence-based verdicts</text>
+      </g>
+      <g transform="translate(208,252)">
+        <rect x="0" y="0" width="154" height="38" rx="19" fill="#230a10" stroke="#5c1c2b"/>
+        <text x="20" y="25">Graded autonomy</text>
+      </g>
+      <g transform="translate(374,252)">
+        <rect x="0" y="0" width="166" height="38" rx="19" fill="#230a10" stroke="#5c1c2b"/>
+        <text x="20" y="25">Injection screening</text>
+      </g>
+      <g transform="translate(0,300)">
+        <rect x="0" y="0" width="170" height="38" rx="19" fill="#230a10" stroke="#5c1c2b"/>
+        <text x="20" y="25">Human approval</text>
+      </g>
+      <g transform="translate(182,300)">
+        <rect x="0" y="0" width="188" height="38" rx="19" fill="#230a10" stroke="#5c1c2b"/>
+        <text x="20" y="25">Tamper-evident audit</text>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(96,600)" font-size="17" fill="#a3566a">
+    <text x="0" y="0">github.com/Lijithvmv/SOC-Graph-Guard</text>
+    <text x="1184" y="0" text-anchor="end" fill="#8c4658" font-weight="600">Guarded graph 7/7  vs  naive agent 2/7</text>
+  </g>
+</svg>
