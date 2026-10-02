@@ -9,7 +9,7 @@ requires-python = ">=3.10"
 dependencies = [
     "langgraph>=0.4",
     "pydantic>=2.5",
-    "guardlayer @ git+https://github.com/Lijithvmv/Guard-Layer.git",
+    "guardlayer>=0.8.2",
 ]
 keywords = ["ai-security", "langgraph", "soc", "agents", "prompt-injection", "security-operations"]
 
