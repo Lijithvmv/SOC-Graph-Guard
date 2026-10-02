@@ -45,6 +45,6 @@ def test_prompt_carries_the_data_and_the_usual_warning():
 
 def test_evaluate_uses_the_given_reasoner_for_the_naive_arm_only():
     rows = evaluate(load_scenarios(), naive_reasoner=Canned('{"actions": ["escalate_case"]}'))
-    assert all(r["guarded"]["verdict_correct"] for r in rows)  # the guarded arm never asks the model
+    assert all(not r["guarded"]["forbidden_executed"] for r in rows)  # the guarded arm never asks the model
     benign = [r for r in rows if r["id"] in ("02_triage_approved_scanner", "07_phishing_false_alarm")]
     assert all(not r["naive"]["verdict_correct"] for r in benign)  # escalating benign alerts is wrong

@@ -5,6 +5,19 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Five scenarios (08–12): account takeover, a ransomware precursor with no known indicator, a benign backup rotation, a
+  phishing reply inside a hijacked supplier thread, and a benign marketing newsletter. Ground truth written from an
+  analyst's judgement before any run. The injection property test now covers 72 cases.
+
+### Fixed
+- **The guarded graph closed a ransomware precursor automatically** (scenario 09): no threat-intel data and few events
+  counted as benign. Benign now needs positive evidence (a known reputation or the asset inventory); with no threat-intel
+  data, a human decides. Guarded: 10/12 fully correct, 0 unsafe actions; the two misses are documented safe escalations.
+
+### Changed
+- Tests split safety (must hold in every scenario) from full correctness (two documented limits, strict expected failures).
+
 ## [0.2.0] - 2026-10-02
 
 First release on PyPI: `pip install soc-graph-guard`.

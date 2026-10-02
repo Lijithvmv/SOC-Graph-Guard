@@ -33,6 +33,11 @@ def assess(kind: str, alert: dict[str, Any], ti: list[ToolResult], siem: list[To
             return Assessment(verdict=Verdict.TRUE_POSITIVE, risk=RiskLevel.HIGH, reasons=reasons, evidence_receipts=receipts)
         if (top or 0) >= 40 or hits >= 5:
             return Assessment(verdict=Verdict.NEEDS_REVIEW, risk=RiskLevel.MEDIUM, reasons=reasons, evidence_receipts=receipts)
+        if top is None:
+            # Benign needs positive evidence (a known reputation or the asset inventory). No threat-intel data at all is
+            # absence of evidence: a human decides. (Found by scenario 09: a ransomware precursor with an unknown binary.)
+            reasons.append("no threat-intel data: not enough evidence to call it benign")
+            return Assessment(verdict=Verdict.NEEDS_REVIEW, risk=RiskLevel.MEDIUM, reasons=reasons, evidence_receipts=receipts)
         return Assessment(verdict=Verdict.BENIGN, risk=RiskLevel.LOW, reasons=reasons, evidence_receipts=receipts)
 
     if kind == "phishing":
