@@ -1,9 +1,10 @@
 [project]
 name = "soc-graph-guard"
-version = "0.1.0"
+version = "0.2.0"
 description = "A security-first agentic SOC reference on LangGraph: graded autonomy, human gates, injection screening, evidence-bound reports and outcome-based evals."
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "Lijith V M" }]
 requires-python = ">=3.10"
 dependencies = [
@@ -12,9 +13,22 @@ dependencies = [
     "guardlayer>=0.8.2",
 ]
 keywords = ["ai-security", "langgraph", "soc", "agents", "prompt-injection", "security-operations"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+]
 
 [project.urls]
 Repository = "https://github.com/Lijithvmv/SOC-Graph-Guard"
+Changelog = "https://github.com/Lijithvmv/SOC-Graph-Guard/blob/main/CHANGELOG.md"
+Issues = "https://github.com/Lijithvmv/SOC-Graph-Guard/issues"
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.5"]
@@ -23,7 +37,7 @@ dev = ["pytest>=8", "ruff>=0.5"]
 soc-graph-guard = "soc_graph_guard.cli:main"
 
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]

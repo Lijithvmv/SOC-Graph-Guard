@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="SOC-Graph-Guard — a security-first agentic SOC on LangGraph" width="100%">
+  <img src="https://raw.githubusercontent.com/Lijithvmv/SOC-Graph-Guard/main/assets/banner.svg" alt="SOC-Graph-Guard — a security-first agentic SOC on LangGraph" width="100%">
 </p>
 
 # soc-graph-guard
@@ -100,15 +100,14 @@ is a deterministic stand-in for a careful analyst that sees only structured evid
 ## Quickstart
 
 ```bash
-git clone https://github.com/Lijithvmv/SOC-Graph-Guard && cd SOC-Graph-Guard
-python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"                                 # pulls LangGraph + GuardLayer
+pip install soc-graph-guard                              # pulls LangGraph + GuardLayer
 
 soc-graph-guard eval                                    # the table above
 soc-graph-guard run 04_triage_subtle_injection          # one report + the audit-chain check
 soc-graph-guard run 05_phishing_credential_harvest --reviewer deny-all   # see what happens when approvals are refused
-pytest -q
 ```
+
+To change it or run the tests: clone the repository, then `pip install -e ".[dev]"` and `pytest -q`.
 
 ## Extending it
 
@@ -125,7 +124,7 @@ pytest -q
 
 ## Limitations
 
-- Replay backend only; no live integrations ship in v0.1.
+- Replay backend only; no live integrations ship yet.
 - The assessment rules are illustrative, not a detection-engineering standard; tune thresholds to your environment.
 - Two workflow kinds (alert triage, phishing containment); more are welcome.
 - A structured field can still be poisoned upstream (a compromised asset inventory). Trust in structured sources is an assumption, and a stated one.
