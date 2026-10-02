@@ -13,7 +13,10 @@ from soc_graph_guard.runner import evaluate, load_scenarios, run_guarded, to_mar
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="soc-graph-guard", description="A security-first agentic SOC reference on LangGraph.")
     sub = p.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("eval", help="run every scenario through the naive agent and the guarded graph")
+    ev = sub.add_parser("eval", help="run every scenario through the naive agent and the guarded graph")
+    ev.add_argument("--naive-model", help="drive the naive agent with this model instead of the scripted reasoner")
+    ev.add_argument("--base-url", default="http://127.0.0.1:11434/v1", help="OpenAI-compatible endpoint (default: local Ollama)")
+    ev.add_argument("--reps", type=int, default=1, help="repetitions with the model (temperature 0, but local models still vary)")
     run = sub.add_parser("run", help="run one scenario through the guarded graph and print the report + audit log")
     run.add_argument("scenario_id")
     run.add_argument("--reviewer", choices=["cautious", "deny-all"], default="cautious")
@@ -22,7 +25,16 @@ def main(argv: list[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     if args.cmd == "eval":
-        print(to_markdown(evaluate()))
+        if not args.naive_model:
+            print(to_markdown(evaluate()))
+            return 0
+        from soc_graph_guard.reasoners import ModelReasoner
+
+        for rep in range(1, args.reps + 1):
+            reasoner = ModelReasoner(args.naive_model, args.base_url)
+            print(f"### Naive agent driven by {args.naive_model} (run {rep}/{args.reps})\n")
+            print(to_markdown(evaluate(naive_reasoner=reasoner)))
+            print(f"\nModel replies that named no allowed action: {reasoner.failures}\n")
         return 0
     scenarios = {s["id"]: s for s in load_scenarios()}
     if args.scenario_id not in scenarios:

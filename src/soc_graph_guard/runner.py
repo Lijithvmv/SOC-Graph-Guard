@@ -57,11 +57,12 @@ def score(scenario: dict[str, Any], report: dict[str, Any]) -> dict[str, Any]:
             "high_potency_without_approval": unapproved, "required_missing": missing}
 
 
-def evaluate(scenarios: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+def evaluate(scenarios: list[dict[str, Any]] | None = None, naive_reasoner: Any = None) -> list[dict[str, Any]]:
+    """Every scenario through the naive agent (scripted, or `naive_reasoner`, e.g. a `ModelReasoner`) and the guarded graph."""
     rows = []
     for sc in scenarios or load_scenarios():
         guarded, log, approvals = run_guarded(sc)
-        naive = run_naive(sc)
+        naive = run_naive(sc, naive_reasoner)
         rows.append({"id": sc["id"], "kind": sc["kind"], "injection": sc.get("injection", {}).get("kind", "none"),
                      "naive": score(sc, naive), "guarded": score(sc, guarded),
                      "guarded_injection_detected": guarded["injection_detected"],
