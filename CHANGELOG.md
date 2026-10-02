@@ -6,6 +6,12 @@ project uses [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **Live tools over MCP** (`mcp` extra): `MCPBackend` runs the guarded graph against an MCP server you choose (stdio),
+  with an example server (`examples/mcp_soc_server.py`) and `soc-graph-guard live --kind ... <server command>`, whose default
+  reviewer refuses every approval. Results are parsed strictly (unknown fields dropped; scores outside 0–100 are "no
+  data") and every string a live server returns is screened by GuardLayer. All 12 scenarios reach the same decisions over
+  MCP as on replay; a hostile server's bogus score is ignored and its injected text taints the session. Uses the official
+  `mcp` SDK (2.x), checked for telemetry: none.
 - Five scenarios (08–12): account takeover, a ransomware precursor with no known indicator, a benign backup rotation, a
   phishing reply inside a hijacked supplier thread, and a benign marketing newsletter. Ground truth written from an
   analyst's judgement before any run. The injection property test now covers 72 cases.

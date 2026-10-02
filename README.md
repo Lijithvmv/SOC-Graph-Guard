@@ -123,8 +123,23 @@ To change it or run the tests: clone the repository, then `pip install -e ".[dev
 
 ## Extending it
 
-- **Live tools:** implement `ToolBackend` (`get_alert`, `threat_intel`, `siem_search`, `mail_scope`, `execute`) over your SIEM,
-  threat-intel and SOAR APIs or MCP servers. Return `Source.LIVE` so reports show it.
+- **Live tools over MCP** (`pip install "soc-graph-guard[mcp]"`): `MCPBackend` runs the same graph against an MCP server you
+  choose, mapping the five operations to its tools (`tools={"threat_intel": "vt_lookup", ...}` to rename them). Try it with
+  the example server, which serves a scenario file:
+
+  ```bash
+  soc-graph-guard live --kind triage python examples/mcp_soc_server.py src/soc_graph_guard/scenarios/03_triage_injected_user_agent.json
+  ```
+
+  Live runs default to a reviewer that refuses every approval, so nothing high-potency runs until you wire in a real one.
+  A server is someone else's software, so nothing it returns is trusted: only known fields of the right type are kept (a
+  score outside 0–100 is "no data", and no data never means benign), and **every string it returns is screened**, not only
+  the alert's marked fields. Tested: all 12 scenarios reach the same decisions over MCP as on replay, and a hostile server
+  returning a score of 999 and an injection in a threat-intel field gets its score ignored and the session tainted. What
+  it can't catch: a server lying with well-formed numbers. Choosing which servers to run is the control for that; every
+  number's source is in the report and the audit log.
+- **Other live tools:** implement `ToolBackend` (`get_alert`, `threat_intel`, `siem_search`, `mail_scope`, `execute`)
+  directly and return `Source.LIVE` so reports show it.
 - **Real reviewers:** answer the `interrupt()` payload from a chat approval, a SOAR task or a ticket, then resume with
   `Command(resume={"reviewer": ..., "decisions": {...}})`.
 - **A real model as the naive baseline:** `soc-graph-guard eval --naive-model <model> --base-url <OpenAI-compatible URL>`
@@ -136,7 +151,7 @@ To change it or run the tests: clone the repository, then `pip install -e ".[dev
 
 ## Limitations
 
-- Replay backend only; no live integrations ship yet.
+- The MCP backend has been tested against the example server only, not yet against production SIEM, threat-intel or SOAR servers.
 - The assessment rules are illustrative, not a detection-engineering standard; tune thresholds to your environment.
 - Two workflow kinds (alert triage, phishing containment); more are welcome.
 - A structured field can still be poisoned upstream (a compromised asset inventory). Trust in structured sources is an assumption, and a stated one.

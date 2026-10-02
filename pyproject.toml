@@ -31,7 +31,8 @@ Changelog = "https://github.com/Lijithvmv/SOC-Graph-Guard/blob/main/CHANGELOG.md
 Issues = "https://github.com/Lijithvmv/SOC-Graph-Guard/issues"
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.5"]
+mcp = ["mcp>=2.2,<3"]
+dev = ["pytest>=8", "ruff>=0.5", "mcp>=2.2,<3"]
 
 [project.scripts]
 soc-graph-guard = "soc_graph_guard.cli:main"

@@ -31,10 +31,13 @@ def load_scenarios(directory: str | Path | None = None) -> list[dict[str, Any]]:
     return [json.loads(p.read_text(encoding="utf-8")) for p in sorted(d.glob("*.json"))]
 
 
-def run_guarded(scenario: dict[str, Any], reviewer: Reviewer | None = None) -> tuple[dict[str, Any], DecisionLog, int]:
-    """Run one scenario to completion, answering each approval interrupt with `reviewer`."""
+def run_guarded(scenario: dict[str, Any], reviewer: Reviewer | None = None, backend: Any = None) -> tuple[dict[str, Any], DecisionLog, int]:
+    """Run one scenario to completion, answering each approval interrupt with `reviewer`.
+
+    `backend` defaults to replaying the scenario; pass an `MCPBackend` to run the same graph against live tools (the
+    scenario then only supplies `id` and `kind`)."""
     reviewer = reviewer or CautiousReviewer()
-    backend = ReplayBackend(scenario)
+    backend = backend if backend is not None else ReplayBackend(scenario)
     graph, log = build_workflow(backend)
     config = {"configurable": {"thread_id": uuid.uuid4().hex}}
     state = graph.invoke({"scenario_id": scenario["id"], "kind": scenario["kind"]}, config)

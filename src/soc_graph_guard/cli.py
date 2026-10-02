@@ -20,6 +20,11 @@ def main(argv: list[str] | None = None) -> int:
     run = sub.add_parser("run", help="run one scenario through the guarded graph and print the report + audit log")
     run.add_argument("scenario_id")
     run.add_argument("--reviewer", choices=["cautious", "deny-all"], default="cautious")
+    live = sub.add_parser("live", help="run the guarded graph against an MCP server (needs the `mcp` extra)")
+    live.add_argument("--kind", choices=["triage", "phishing"], required=True)
+    live.add_argument("--reviewer", choices=["cautious", "deny-all"], default="deny-all",
+                      help="deny-all (default) refuses every approval, so nothing high-potency runs against live tools")
+    live.add_argument("server", nargs=argparse.REMAINDER, help="the command that starts the MCP server, e.g. python server.py")
     args = p.parse_args(argv)
 
     if hasattr(sys.stdout, "reconfigure"):
@@ -35,6 +40,18 @@ def main(argv: list[str] | None = None) -> int:
             print(f"### Naive agent driven by {args.naive_model} (run {rep}/{args.reps})\n")
             print(to_markdown(evaluate(naive_reasoner=reasoner)))
             print(f"\nModel replies that named no allowed action: {reasoner.failures}\n")
+        return 0
+    if args.cmd == "live":
+        if not args.server:
+            print("give the command that starts the MCP server", file=sys.stderr)
+            return 2
+        from soc_graph_guard.mcp_backend import MCPBackend
+
+        reviewer = CautiousReviewer() if args.reviewer == "cautious" else DenyAll()
+        with MCPBackend(args.server[0], args.server[1:]) as backend:
+            report, log, _ = run_guarded({"id": "live", "kind": args.kind}, reviewer, backend)
+        print(json.dumps(report, indent=2))
+        print(f"\naudit log: {len(log.entries)} entries, chain {'intact' if log.verify() else 'BROKEN'}")
         return 0
     scenarios = {s["id"]: s for s in load_scenarios()}
     if args.scenario_id not in scenarios:

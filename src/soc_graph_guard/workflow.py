@@ -59,6 +59,17 @@ def _key(req: dict[str, Any]) -> str:
     return f"{req['name']}:{req['target']}"
 
 
+def _strings_in(value: Any) -> list[str]:
+    """Every non-empty string inside JSON-like data, in order."""
+    if isinstance(value, str):
+        return [value] if value.strip() else []
+    if isinstance(value, dict):
+        return [s for v in value.values() for s in _strings_in(v)]
+    if isinstance(value, list):
+        return [s for v in value for s in _strings_in(v)]
+    return []
+
+
 def build_workflow(backend: ToolBackend, *, screen: InputScreen | None = None, log: DecisionLog | None = None,
                    summarizer: Any = None, checkpointer: Any = None):
     """Build the compiled graph. Dependencies are injected, so the same graph runs on replay or live backends."""
@@ -86,6 +97,11 @@ def build_workflow(backend: ToolBackend, *, screen: InputScreen | None = None, l
         if state.get("mail"):
             untrusted["email_subject"] = state["mail"]["data"].get("subject", "")
             untrusted["email_body"] = state["mail"]["data"].get("body", "")
+        # A live server is someone else's software: every string it returned is screened, not only the marked fields.
+        live = [r for r in [state["alert"], *state.get("ti", []), *state.get("siem", []), state.get("mail")]
+                if r and r.get("source") == "live"]
+        for i, text in enumerate(_strings_in([r["data"] for r in live])[:200]):
+            untrusted.setdefault(f"live_text_{i}", text)
         tainted, results = screen.screen(untrusted)
         log.append("inputs_screened", tainted=tainted, flagged=[r.field for r in results if r.verdict != "allow"])
         return {"tainted": tainted, "screen": [r.__dict__ for r in results]}
